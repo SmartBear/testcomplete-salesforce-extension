@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScriptExtensionGroup Name="API">
+	<Category Name="Runtime Objects">
+		<ScriptExtension Name="Salesforce API" Author="SmartBear Software" Version="1.0" HomePage="www.smartbear.com">
+			<Script Name="script.sj" InitRoutine="Initialize" FinalRoutine="Finalize">
+				<RuntimeObject Name="Salesforce">
+					<Method Name="LoginWithSessionId" Routine="RuntimeObject_LoginWithSessionId">
+						Authorizes access to the Salesforce REST API via the session ID by using the specified credentials.
+					</Method>
+					<Method Name="SetAccessToken" Routine="RuntimeObject_SetAccessToken">
+						Specifies the access token for the authorization.
+					</Method>
+					<Method Name="Query" Routine="RuntimeObject_Query">
+						Executes an SOQL query and gets the query result as a single response.
+					</Method>
+					<Property Name="Account" GetRoutine="RuntimeObject_GetAccountAPI">
+						Provides access to CRUD APIs for the Salesforce Account object.
+					</Property>
+					<Property Name="Lead" GetRoutine="RuntimeObject_GetLeadAPI">
+						Provides access to CRUD APIs for the Salesforce Lead object.
+					</Property>
+					<Property Name="Contact" GetRoutine="RuntimeObject_GetContactAPI">
+						Provides access to CRUD APIs for the Salesforce Contact object.
+					</Property>
+					<Property Name="Opportunity" GetRoutine="RuntimeObject_GetOpportunityAPI">
+						Provides access to CRUD APIs for the Salesforce Opportunity object.
+					</Property>
+					<Property Name="SObject" GetRoutine="RuntimeObject_GetObjectAPI">
+						Provides access to CRUD APIs for the Salesforce object with the specified name.
+					</Property>
+					<Property Name="OrgInstance" GetRoutine="RuntimeObject_GetOrgInstance" SetRoutine="RuntimeObject_SetOrgInstance">
+						Gets or sets the Salesforce organization instance (must be in the https://[your_instance].salesforce.com format).
+					</Property>
+					<Description>
+						Provides helper functions to work with the Salesforce REST API.
+					</Description>
+				</RuntimeObject>
+			</Script>
+			<Description>
+				Provides a script object to automate working with Salesforce.
+			</Description>
+		</ScriptExtension>
+	</Category>
+</ScriptExtensionGroup>

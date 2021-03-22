@@ -2,6 +2,28 @@
 [Salesforce](https://www.Salesforce.com/) is a cloud-based customer relationship management solution. It includes services for managing customers, cases, sales opportunities, and so on.
 The **Salesforce API** script extension for [TestComplete](https://smartbear.com/product/testcomplete/overview/) simplifies working with Salesforce resources from TestComplete tests. The extension provides a wrapper for the most commonly used Salesforce API operations.
 
+## Table of contents
+
+* [Requirements](#requirements)
+* [Install and enable the extension](#install)
+    * [1. Build the extension](#build)
+    * [2. Install and enable the extension](#enable)
+* [Use the extension](#use)
+* [How to use](#how-to)
+    * [1. Log in](#log-in)
+    * [2. Access objects and send queries](#access)
+    * [Queries](#queries)
+* [Known issues and limitations](#known-issues)
+* [Advanced example - Add data to Salesforce from an external file](#advanced-example)
+    * [JavaScript example](#javascript)
+    * [Python example](#python)
+* [Reference](#reference)
+    * [`Salesforce` object](#salesforce-object)
+    * [`Account`, `Contact`, `Lead`, `Opportunity`, `SObject` objects](#objects)
+    * [Record objects](#record-objects)
+* [Support](#support)
+
+<a name="requirements"></a>
 ## Requirements
 For the extension to be able to access the Salesforce resources by using the API, the following requirements must be met:
 
@@ -13,12 +35,15 @@ For the extension to be able to access the Salesforce resources by using the API
 * The Salesforce account you are going to use in your tests must be signed up for a Salesforce Develop Edition organization. See [Obtain a Salesforce Developer Edition Organization](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/quickstart_dev_org.htm).
 * The API Enabled permission must be enabled for your Salesforce account. To learn how to enable the permission, please see the [Salesforce documentation](https://help.salesforce.com/articleView?id=sf.admin_userperms.htm&type=5).
 
-
+<a name="install"></a>
 ## Install and enable the extension
 
+<a name="build"></a>
 ### 1. Build the extension
 1.	Clone the repository from GitHub to your computer.
 2.	Run **build.bat** that comes with the extension files and resides in the repository root folder. It will compile the extension files into a single **SalesForce.tcx** file.
+
+<a name="enable"></a>
 ### 2. Install and enable the extension
 1.	If you have any running instances of TestComplete (or TestExecute), close them.
 2.	Double-click the generated **SalesForce.tcx** file and follow the instructions to install the extension.
@@ -27,6 +52,7 @@ To make sure that the extension is installed correctly, locate it in the **File 
 
 ![The Salesforce API script extension in TestComplete](./README.files/install-script-extension.png)
 
+<a name="use"></a>
 ## Use the extension
 The extension provides the `Salesforce` objects you can use in your TestComplete tests to access Salesforce resources: **objects** available to your organization (they correspond to database tables) and individual **records** for these objects (they correspond to table rows).
 
@@ -37,7 +63,9 @@ Use the object to:
 * Create, update, and delete records for the standard `Account`, `Contact`, `Lead`, `Opportunity` objects, and other Salesforce objects.
 * Run SOQL queries and get query results.
 
+<a name="how-to"></a>
 ## How to use
+<a name="log-in"></a>
 ### 1. Log in
 Before you start working with Salesforce resources from TestComplete tests, provide your credentials to be able to access the Salesforce resources. You can do it in one of the following ways.
 
@@ -78,7 +106,7 @@ function Login_AccessToken()
  
 }
 ```
-
+<a name="access"></a>
 ### 2. Access objects and send queries
 #### Account, Contact, Lead, and Opportunity objects
 To work with the standard `Account`, `Contact`, `Lead`, and `Opportunity` objects, you can use the appropriate properties of the `Salesforce` object:
@@ -235,7 +263,7 @@ function Check_Record()
   
 }
 ```
-
+<a name="queries"></a>
 ### Queries
 Use the `Salesforce.Query` method to send SOQL queries to Salesforce:
 ```js
@@ -253,7 +281,7 @@ The object that the method returns provides access to the server response. If th
 
 For detailed information on the query syntax, see [SOQL and SOSL Reference](https://developer.Salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_sosl_intro.htm) in the Salesforce Developer Guide.
 
-
+<a name="known-issues"></a>
 ## Known issues and limitations
 The VBScript and DelphiScript scripting languages do not support calling methods of the `Salesforce` object without parameters. The following will not work correctly:
 
@@ -285,7 +313,7 @@ begin
   //...
 end;
 ```
-
+<a name="advanced-example"></a>
 ## Advanced example - Add data to Salesforce from an external file
 In TestComplete, it is possible to get input test data from an external file, a data source, for example, from an Excel file or a database. The sample code below shows how to create Account records with data retrieved from an Excel file and send the created records to Salesforce.
 
@@ -433,9 +461,10 @@ def Send_Account_Data_from_Excel():
   Log.PopLogFolder()
 ```
 
-
+<a name="reference"></a>
 ## Reference
 
+<a name="salesforce-object"></a>
 ### `Salesforce` object
 The object is a wrapper for the most commonly used operations of the Salesforce API. Use the object to access Salesforce resources from TestComplete tests.
 
@@ -456,6 +485,7 @@ The object is a wrapper for the most commonly used operations of the Salesforce 
 | `Opportunity`      | Provides access to the Opportunity object in Salesforce.         |
 | `SObject(objectName)`          | Provides access to a Salesforce object by its name.         |
 
+<a name="objects"></a>
 ### `Account`, `Contact`, `Lead`, `Opportunity`, `SObject` objects
 The `Account`, `Contact`, `Lead`, and `Opportunity` objects provide access to the appropriate Salesforce objects. The `SObject` object provides access to an arbitrary object by its name.
 
@@ -469,6 +499,7 @@ The `Account`, `Contact`, `Lead`, and `Opportunity` objects provide access to th
 
 **Note**: The `New` method creates a new record locally, it will be available in your test only. To send the created record to the server, use the `Send` method of the created record (see below).
 
+<a name="record-objects"></a>
 ### Record objects
 Provide access to individual records of objects in Salesforce. To get a `Record` object in your test, use either the `New` or `Get` method of the needed object.
 
@@ -484,6 +515,7 @@ The properties provide access to the most commonly used fields of the appropriat
 | `Send(synchronizeOnCreate)` | Sends data on the current record to Salesforce. Depending on the _syncronizeOnCreate_ parameter value. If the parameter is `true`, the method will update the record data on the server with the local data and then update the local data with the server data. If the local record has any fields that were not specified, they will be specified by values set on the server. This way, you can update your local record with the default data set on the server. If the parameter is `false`, the method will update the record data on the server with the local data. It will not update the local data with the server data, that is, if the local record has any fields that were not specified when the record was created in your test, they will remain unspecified.        |
 | `SetCustomField(fieldName, fieldValue)`    | Sets the values of the specified field of the current record. If the record does not have such a field, the method will create it. This method sets the field of the local record. To set the field value of the record on the server, after calling this method, update the server record data by calling the Send method.        |
 
+<a name="enumerable-object"></a>
 ### Enumerable object
 Several properties and methods provided by the extension return a collection of items. This object provides a way to work with the collection in your tests.
 
@@ -494,7 +526,7 @@ Several properties and methods provided by the extension return a collection of 
 | `GetItem`         | Returns an object by its zero-based index in the collection.      |
 
 
-
+<a name="support"></a>
 ## Support
 The Salesforce API is an open-source script extension for TestComplete. You can ask questions and share your experience and suggestions in our Community:
 
